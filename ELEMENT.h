@@ -4,7 +4,7 @@
 
 
 
-#define ECKEN_ANZAHL 6
+#define ECKEN_ANZAHL 6    //SHOULD NOT BE CHANGED SINCE SPECIAL CASE (ECKEN_ANZAHL(number of corners) = NUMBER OF POSSIBLE ALIGNED NEIGHBOUR ELEMENT_OBJECT
 
 
 #include <stdlib.h>
@@ -15,7 +15,7 @@ typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
 	
 	unsigned int wert_ID,abs;					//ELEMENT OBJECT ABSOLUTE/ VALUE IN COMPLEX COORDINATE SYSTEM
 	float cplx_exp;
-	struct hexfeld* node[ECKEN_ANZAHL==4?ECKENANZAHL*2:];		//DEFINING N-POINTER AT SURROUNDING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
+	struct hexfeld* node[ECKEN_ANZAHL];				//DEFINING N-POINTER AT SURROUNDING AND ALIGNING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
   	}
 
 inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT OBJECTS
@@ -42,49 +42,35 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 			}	
 		}
 
-	/*	for (int j = 0; j < ECKEN_ANZAHL; j++) {
-			 //hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char)) * (j + 1) + (hex_arr->abs)*ECKEN_ANZAHL; //hex_arr+1
-			
-				switch(j){
-				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL;  
-					break;
-				 case 1:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL+((sizeof ELEMENT) / sizeof(char));  
-					break;
-				 case 2:	 hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char));
-					break;
-				 case 3:	 hex_arr->node[j] = hex_arr - ((sizeof ELEMENT) / sizeof(char)); 
-					break;
-				 case 4:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL - ((sizeof ELEMENT) / sizeof(char)); 
-					break;
-				 case 5:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL*3- ((sizeof ELEMENT) / sizeof(char));
-					 break;
-				}
-			
-		} */
-	};
+	/*	
 
 
-inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FILLING AND LINKING ALLOCATED ELEMENT OBJECTS WITH EACH CORRECT NEIGHBOUR DEPENDING ON GRAPHIC 1 
-	for (unsigned int i = 1; i <= endwert; i++) {
+inline void link_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FILLING AND LINKING ALLOCATED ELEMENT OBJECTS NODES WITH EACH CORRESPONDING ALIGNING NEIGHBOUR ACCORDING TO GRAPHIC  
+	for(int i =0 ; i<ECKEN_ANZAHL; i++)
+ 		hex_arr->node[i] = hex_arr+i;
+   
+ 		hex_arr->wert_ID = 1;
+   		hex_arr++;
+ 	for ( i = 2; i <= endwert; i++) {
 		(hex_arr++)->wert_ID = i;
 		for (int j = 0; j < ECKEN_ANZAHL; j++) 
 			 //hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char)) * (j + 1) + (hex_arr->ring)*ECKEN_ANZAHL; //hex_arr+1
 			
 				switch(j){
-				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL;  
+				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL;  
 					break;
-				 case 1:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL+((sizeof ELEMENT) / sizeof(char));  
+				 case 1:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL+1;  
 					break;
-				 case 2:	 hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char));
+				 case 2:	 hex_arr->node[j] = hex_arr + 1;
 					break;
-				 case 3:	 hex_arr->node[j] = hex_arr - ((sizeof ELEMENT) / sizeof(char)); 
+				 case 3:	 hex_arr->node[j] = hex_arr - 1; 
 					break;
-				 case 4:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL - ((sizeof ELEMENT) / sizeof(char)); 
+				 case 4:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL -1; 
 					break;
-				 case 5:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL*3- ((sizeof ELEMENT) / sizeof(char));
+				 case 5:	 hex_arr->node[j] = hex_arr + eor((hex_arr->abs)+1)-(hex_arr->wert_ID) ;
 					 break;
 				}
-			
+			*/
 
 
 
