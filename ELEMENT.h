@@ -13,10 +13,10 @@
 typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
 	
 	unsigned int wert_ID,ring;
-	struct hexfeld* node[ECKEN_ANZAHL];				// N-POINTER AT SURROUNDING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
+	struct hexfeld* node[ECKEN_ANZAHL==4?ECKENANZAHL*2];				// N-POINTER AT SURROUNDING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
 
 	void ring_ID(int element_ID) {
-		ring = (unsigned int)((wert_ID - 1) / ECKEN_ANZAHL); ggt(wert_ID,ECKEN_ANZAHL);
+		ring = (unsigned int)((wert_ID - 1) / ECKEN_ANZAHL); 	// <----------- ***CAUTION*** YET INCORRECT
 	}
 	
 }ELEMENT;
@@ -26,24 +26,32 @@ typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
 	unsigned int wert_ID,abs;					//ELEMENT OBJECT ABSOLUTE/ VALUE IN COMPLEX COORDINATE SYSTEM
 	float cplx_exp;
 
-	void abs_value(int element_ID) {
-		abs = (unsigned int)((wert_ID - 1) / ECKEN_ANZAHL);
-		}
-
   	}
-	//
 
 inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT OBJECTS
 
 	return (ELEMENT*)malloc(sizeof ELEMENT * endwert);
 }
 
-inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INITIALISATION AND LINKING ALLOCATED ELEMENT OBJECTS WITH EACH CORRECT NEIGHBOUR DEPENDING ON GRAPHIC 1 
-	for (unsigned int i = 1; i <= endwert; i++) {
+inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INITIALIZATION AND LOGICAL RELINKING PHYSICAL MEM 
+									//ALLOCATED ELEMENT OBJECTS WITH EACH CORRECT NEIGHBOUR AS SHOWN IN GRAFIC  
+	int i=1;
+	
+	(hex_arr++)->wert_ID = i;
+	(hex_arr++)->cplx_exp = 0;
+	(hex_arr++)->abs = 0;						 //SPECIAL CASE FOR FIRST ELEMENT =i =1 (Point of Origin)
+	
+	for (unsigned int n = 1,int j =0 ; i <= endwert; ++i,j++) {
 		(hex_arr++)->wert_ID = i;
-		(hex_arr++)->cplx_exp =(float)(360/(ECKEN_ANZAHL*(hex_arr++)->abs));
-		(hex_arr++)->abs = (i==1?0:i);		//(hex_arr++)->abs = (unsigned int) ((hex_arr++)->wert_ID) - 1 / ECKEN_ANZAHL; //SPECIAL CASE FOR i==1 (Point of Origin)
-/*
+		
+		(hex_arr++)->abs = n;		//(hex_arr++)->abs = (unsigned int) ((hex_arr++)->wert_ID) - 1 / ECKEN_ANZAHL; //SPECIAL CASE FOR i==1 (Point of Origin)
+		(hex_arr++)->cplx_exp =(float)(360/(ECKEN_ANZAHL*(hex_arr++)->abs))*j;
+		if((i==n*ECKEN_ANZAHL+2)-1){
+			j=0;
+			n++;
+			}	
+		}
+		/*
 	for(int j= 0; j<=ECKEN_ANZAHL*i
 
 */
