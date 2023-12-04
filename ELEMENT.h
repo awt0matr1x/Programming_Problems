@@ -10,22 +10,12 @@
 #include <stdlib.h>
 
 
-typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
-	
-	unsigned int wert_ID,ring;
-	struct hexfeld* node[ECKEN_ANZAHL==4?ECKENANZAHL*2];				// N-POINTER AT SURROUNDING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
-
-	void ring_ID(int element_ID) {
-		ring = (unsigned int)((wert_ID - 1) / ECKEN_ANZAHL); 	// <----------- ***CAUTION*** YET INCORRECT
-	}
-	
-}ELEMENT;
 // ALTERNATIV SOLUTION USING AN COMPLEX KOORDINATE SYSTEM
 typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
 	
 	unsigned int wert_ID,abs;					//ELEMENT OBJECT ABSOLUTE/ VALUE IN COMPLEX COORDINATE SYSTEM
 	float cplx_exp;
-
+	struct hexfeld* node[ECKEN_ANZAHL==4?ECKENANZAHL*2:];		//DEFINING N-POINTER AT SURROUNDING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
   	}
 
 inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT OBJECTS
@@ -41,29 +31,19 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 	(hex_arr++)->cplx_exp = 0;
 	(hex_arr++)->abs = 0;						 //SPECIAL CASE FOR FIRST ELEMENT =i =1 (Point of Origin)
 	
-	for (unsigned int n = 1,int j =0 ; i <= endwert; ++i,j++) {
+	for (unsigned int n = 1, j =0 ; i <= endwert; ++i,j++) {
 		(hex_arr++)->wert_ID = i;
 		
-		(hex_arr++)->abs = n;		//(hex_arr++)->abs = (unsigned int) ((hex_arr++)->wert_ID) - 1 / ECKEN_ANZAHL; //SPECIAL CASE FOR i==1 (Point of Origin)
-		(hex_arr++)->cplx_exp =(float)(360/(ECKEN_ANZAHL*(hex_arr++)->abs))*j;
-		if((i==n*ECKEN_ANZAHL+2)-1){
-			j=0;
-			n++;
+		(hex_arr++)->abs = n;		
+		(hex_arr++)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n)*j;			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
+		if(i==eor(n){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
+			j=0;								//THUS SETTING ANGLE FACTOR BACK TO ZERO
+			n++;								//AND INCREMENTING THE ABS VALUE WHICH INDICATES THE NEXT RING
 			}	
 		}
-		/*
-	for(int j= 0; j<=ECKEN_ANZAHL*i
 
-*/
-
-
-
-
-
-		
-		(hex_arr++)->abs = (i==1?0:i);		//(hex_arr++)->abs = (unsigned int) ((hex_arr++)->wert_ID) - 1 / ECKEN_ANZAHL; //SPECIAL CASE FOR i==1 (Point of Origin)
-		for (int j = 0; j < ECKEN_ANZAHL; j++) 
-			 //hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char)) * (j + 1) + (hex_arr->ring)*ECKEN_ANZAHL; //hex_arr+1
+	/*	for (int j = 0; j < ECKEN_ANZAHL; j++) {
+			 //hex_arr->node[j] = hex_arr + ((sizeof ELEMENT) / sizeof(char)) * (j + 1) + (hex_arr->abs)*ECKEN_ANZAHL; //hex_arr+1
 			
 				switch(j){
 				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->ring)*ECKEN_ANZAHL;  
@@ -80,7 +60,7 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 					 break;
 				}
 			
-		}
+		} */
 	};
 
 
@@ -117,7 +97,13 @@ inline unsigned int prod(unsigned int anzahl_nodes, ELEMENT* hex_element) {	//IT
 
 
 	
+unsigned int eor(unsigned int n){
+	unsigned int eor = 1;					//ITERATIV CALCULATION OF END OF RING 
+	for(int lv =1  ; lv<=n; lv++)				// EOR = SIG(upper limit = n|lower limit=n=1) n*ECKEN_ANZAHL
+	eor+=lv*ECKEN_ANZAHL;
+	return eor;
 
+}
 
 
 
