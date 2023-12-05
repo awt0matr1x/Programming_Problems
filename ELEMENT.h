@@ -27,14 +27,14 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 									//ALLOCATED ELEMENT OBJECTS WITH EACH CORRECT NEIGHBOUR AS SHOWN IN GRAFIC  
 	int i=1;
 	
-	(hex_arr++)->wert_ID = i;
-	(hex_arr++)->cplx_exp = 0;
+	hex_arr->wert_ID = i;
+	hex_arr->cplx_exp = 0;
 	(hex_arr++)->abs = 0;						 //SPECIAL CASE FOR FIRST ELEMENT =i =1 (Point of Origin)
 	
 	for (unsigned int n = 1, j =0 ; i <= endwert; ++i,j++) {
-		(hex_arr++)->wert_ID = i;
+		(hex_arr)->wert_ID = i;
 		
-		(hex_arr++)->abs = n;		
+		(hex_arr)->abs = n;		
 		(hex_arr++)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n)*j;			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
 		if(i==eor(n){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
 			j=0;								//THUS SETTING ANGLE FACTOR BACK TO ZERO
@@ -59,7 +59,7 @@ inline void link_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FIL
 				switch(j){
 				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL;  
 					break;
-				 case 1:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL+1;  
+				 case 1:	 hex_arr->node[j] = hex_arr + vektor(hex_arr-, abs, cplx_exp);
 					break;
 				 case 2:	 hex_arr->node[j] = hex_arr + 1;
 					break;
@@ -92,14 +92,7 @@ unsigned int eor(unsigned int n){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
+unsigned int vektor(ELEMENT* hex_arr, int abs, int cplx_exp){
+	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++)
+	return hex_arr->wert_ID;
+}
