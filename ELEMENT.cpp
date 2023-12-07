@@ -14,7 +14,7 @@ int main() {
 	hex_arr = alloc_hex_arr(ENDWERT);			//ALLOCATION 
 	init_hex_arr(hex_arr,ENDWERT);				//INITIALATION
 
-	ergebnis = prod(ECKEN_ANZAHL, *(hex_arr+REF)->node);	//OUTPUT
+	ergebnis = prod(ECKEN_ANZAHL, (&hex_arr[REF]->node);	//OUTPUT
 	printf("Produkt_Umkreis von Element %d = %d\n",REF, ergebnis);
 	
 	return 0;
