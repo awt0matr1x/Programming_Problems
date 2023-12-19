@@ -18,8 +18,8 @@ inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT 
 	return (ELEMENT*)malloc(sizeof ELEMENT * endwert);
 }
 
-inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INITIALIZATION AND LOGICAL RELINKING PHYSICAL MEM 
-									//ALLOCATED ELEMENT OBJECTS WITH EACH CORRECT NEIGHBOUR AS SHOWN IN GRAFIC  
+inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INITIALIZATION AND CALCULATION OF EACH STRUCT MEMBERS
+
 	int i=1;
 	
 	hex_arr->wert_ID = i;
@@ -30,7 +30,7 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 		(hex_arr)->wert_ID = i;
 		
 		(hex_arr)->abs = n;		
-		(hex_arr)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n))*j;			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
+		(hex_arr)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n)*j);			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
 		if(i==eor(n)){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
 			j=0;								//THUS SETTING ANGLE FACTOR BACK TO ZERO
 			n++;								//AND INCREMENTING THE ABS VALUE WHICH INDICATES THE NEXT RING
@@ -54,7 +54,7 @@ inline void link_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FIL
 				switch(j){
 				 case 0:	 hex_arr->node[j] = hex_arr + (hex_arr->abs)*ECKEN_ANZAHL;  
 					break;
-				 case 1:	 hex_arr->node[j] = hex_arr + vektor(hex_arr,hex_arr->abs+1, hex_arr->cplx_exp)- hex_arr->wert_ID ;
+				 case 1:	 hex_arr->node[j] = hex_arr + vector(hex_arr,hex_arr->abs+1, hex_arr->cplx_exp)- hex_arr->wert_ID ;
 					break;
 				 case 2:	 hex_arr->node[j] = hex_arr + 1;
 					break;
@@ -67,12 +67,24 @@ inline void link_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FIL
 				}
 			*/
 
-inline unsigned int prod(unsigned int anzahl_nodes, ELEMENT* hex_element) {	//ITERATIV CALCULATION OF PRODUCT OF SURROUNDING ELEMENT OBJECT VALUES 
+inline unsigned int prodBYnode(unsigned int anzahl_nodes, ELEMENT* hex_element) {	//ITERATIV CALCULATION OF PRODUCT OF SURROUNDING ELEMENT OBJECT VALUES 
 	int produkt = 1;
 	for (unsigned int i = 0; i < anzahl_nodes; i++)
 		produkt *= hex_element->node[i]->wert_ID;
 	return produkt;
 }
+
+
+unsigned int prodBYvector(unsigned int ref, ELEMENT* hex_element){
+	unsigned int produkt = 1;
+	
+
+
+
+	
+	return produkt;
+}
+
 
 
 unsigned int eor(unsigned int n){				
@@ -84,7 +96,7 @@ unsigned int eor(unsigned int n){
 }
 
 
-unsigned int vektor(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
+unsigned int vector(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
 	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++){}	//ITERATE THROUGH COORDINATE SYSTEM ARRAY UNTIL COMPLEX VEKTOR IS FOUND, ACCORDING TO PARAMETERS 
 	return hex_arr->wert_ID;
 }
