@@ -14,7 +14,7 @@ int main() {
 	hex_arr = alloc_hex_arr(ENDWERT);			//ALLOCATION 
 	init_hex_arr(hex_arr,ENDWERT);				//INITIALATION
 
-	ergebnis = prodBYnode((unsigned int)ECKEN_ANZAHL, (&hex_arr[REF]->node);	//OUTPUT SOLUTION EITHER BY prodBYnode() or prodBYvector() func
+	ergebnis = prodBYnode((unsigned int)ECKEN_ANZAHL, (&hex_arr[REF]->node));	//OUTPUT SOLUTION EITHER BY prodBYnode() or prodBYvector() func
 	printf("Produkt_Umkreis von Element %d = %d\n",REF, ergebnis);
 	
 	return 0;
