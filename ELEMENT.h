@@ -11,7 +11,7 @@ typedef struct hexfeld {						//DEFINITION OF AN ELEMENT OBJECT OF A HEX ARRAY
 	unsigned int wert_ID,abs;					//ELEMENT OBJECT ABSOLUTE(-VALUE) IN COMPLEX COORDINATE SYSTEM
 	float cplx_exp;
 	struct hexfeld* node[ECKEN_ANZAHL];				//DEFINING N-POINTER AT SURROUNDING AND ALIGNING ELEMENTS, DEPENDING ON NUMBER OF CORNERS OF ELEMENT OBJECT   
-  	}
+  	}ELEMENT;
 
 inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT OBJECTS
 
@@ -31,13 +31,13 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 		
 		(hex_arr)->abs = n;		
 		(hex_arr)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n))*j;			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
-		if(i==eor(n){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
+		if(i==eor(n)){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
 			j=0;								//THUS SETTING ANGLE FACTOR BACK TO ZERO
 			n++;								//AND INCREMENTING THE ABS VALUE WHICH INDICATES THE NEXT RING
 			}	
 		}
 
-	/*	
+	/*STILL IN WORK...	
 
 
 inline void link_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV FILLING AND LINKING ALLOCATED ELEMENT OBJECTS NODES WITH EACH CORRESPONDING ALIGNING NEIGHBOUR ACCORDING TO GRAPHIC  
@@ -85,6 +85,6 @@ unsigned int eor(unsigned int n){
 
 
 unsigned int vektor(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
-	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++)	//ITERATE THROUGH COORDINATE SYSTEM ARRAY UNTIL COMPLEX VEKTOR IS FOUND, ACCORDING TO PARAMETERS 
+	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++){}	//ITERATE THROUGH COORDINATE SYSTEM ARRAY UNTIL COMPLEX VEKTOR IS FOUND, ACCORDING TO PARAMETERS 
 	return hex_arr->wert_ID;
 }
