@@ -17,7 +17,6 @@ inline ELEMENT* alloc_hex_arr(unsigned int endwert) {			//ALLOCATION OF ELEMENT 
 
 	return (ELEMENT*)malloc(sizeof ELEMENT * endwert);
 }
-
 inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INITIALIZATION AND CALCULATION OF EACH STRUCT MEMBERS
 
 	int i=1;
@@ -75,15 +74,15 @@ inline unsigned int prodBYnode(unsigned int anzahl_nodes, ELEMENT* hex_element) 
 }
 
 
-unsigned int prodBYvector(unsigned int ref, ELEMENT* hex_element){
+/*unsigned int prodBYvector(unsigned int ref, ELEMENT* hex_element){
 	unsigned int produkt = 1;
 	
-
-
+	for(;hex_arr->wert_ID != ref ; hex_arr++){}
+	vector(hex_arr, hex_arr->abs+1, hex_arr->)
 
 	
 	return produkt;
-}
+}*/
 
 
 
@@ -96,7 +95,7 @@ unsigned int eor(unsigned int n){
 }
 
 
-unsigned int vector(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
+ELEMENT* vector(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
 	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++){}	//ITERATE THROUGH COORDINATE SYSTEM ARRAY UNTIL COMPLEX VEKTOR IS FOUND, ACCORDING TO PARAMETERS 
-	return hex_arr->wert_ID;
+	return hex_arr;
 }
