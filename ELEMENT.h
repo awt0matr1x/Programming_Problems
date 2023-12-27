@@ -78,8 +78,8 @@ inline unsigned int prodBYnode(unsigned int anzahl_nodes, ELEMENT* hex_element) 
 	unsigned int produkt = 1;
 	
 	for(;hex_arr->wert_ID != ref ; hex_arr++){}
-	vector(hex_arr, hex_arr->abs+1, hex_arr->)
-
+	vector(hex_arr, hex_arr->abs+1, );
+	
 	
 	return produkt;
 }*/
@@ -95,7 +95,12 @@ unsigned int eor(unsigned int n){
 }
 
 
-ELEMENT* vector(ELEMENT* hex_arr, int abs, int cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
+float anglefactor(ELEMENT* element){
+	float factor= (element->cmplx_exp)*360 / (anzahlecken*(element->abs));
+return factor;
+}
+
+ELEMENT* vector(ELEMENT* hex_arr, int abs, float cplx_exp){			//COMPUTATION OF COMPLEX OFFSET VEKTOR
 	for(;hex_arr->abs != abs && hex_arr->cplx_exp != cplx_exp; hex_arr++){}	//ITERATE THROUGH COORDINATE SYSTEM ARRAY UNTIL COMPLEX VEKTOR IS FOUND, ACCORDING TO PARAMETERS 
 	return hex_arr;
 }
