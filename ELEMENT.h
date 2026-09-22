@@ -29,7 +29,7 @@ inline void init_hex_arr(ELEMENT* hex_arr, unsigned int endwert){	//ITERATIV INI
 		(hex_arr)->wert_ID = i;
 		
 		(hex_arr)->abs = n;		
-		(hex_arr)->cplx_exp =(float)(360/(ECKEN_ANZAHL*n)*j);			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
+		(hex_arr)->cplx_exp =(float)((360/(ECKEN_ANZAHL*n))*j);			//CALCULATING COMPLEX EXPONENTIAL VALUE MULTIPLIED BY ANGLE FACTOR j
 		if(i==eor(n)){								//TESTING THE CONDITION IF ITERATIV INITIALIZATION HAS REACHED END OF CURRENT RING 			
 			j=0;								//THUS SETTING ANGLE FACTOR BACK TO ZERO
 			n++;								//AND INCREMENTING THE ABS VALUE WHICH INDICATES THE NEXT RING
@@ -78,8 +78,8 @@ inline unsigned int prodBYnode(unsigned int anzahl_nodes, ELEMENT* hex_element) 
 	unsigned int produkt = 1;
 	
 	for(;hex_arr->wert_ID != ref ; hex_arr++){}
-	vector(hex_arr, hex_arr->abs+1, );
-	
+	vector(hex_arr, hex_arr->abs+1,(hex_arr+1)->cmplx_exp );
+	//hex_arr->abs+1
 	
 	return produkt;
 }*/
@@ -87,9 +87,13 @@ inline unsigned int prodBYnode(unsigned int anzahl_nodes, ELEMENT* hex_element) 
 
 
 unsigned int eor(unsigned int n){				
-	unsigned int eor = 1;					//ITERATIV CALCULATION OF END OF RING 
-	for(int lv =1  ; lv<=n; lv++)				// EOR = SIG(upper limit = n|lower limit=n=1) n*ECKEN_ANZAHL
-	eor+=lv*ECKEN_ANZAHL;
+	unsigned int eor = 1;
+	int lv =1//ITERATIV CALCULATION OF END OF RING 
+	do{
+		eor+=lv*ECKEN_ANZAHL  // EOR = SIG(upper limit = n|lower limit=n=1) n*ECKEN_ANZAHL
+		lv++;
+	}while(!(lv<=n))		
+
 	return eor;
 
 }
